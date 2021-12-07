@@ -1,0 +1,36 @@
+{
+    "name": "node-red-contrib-inspector",
+    "version": "1.0.0",
+    "description": "A Node-RED node to (de)activate a NodeJs code inspector session",
+    "dependencies": {
+    },
+    "author": {
+        "name": "Bart Butenaers"
+    },
+    "contributors": [
+    ],
+    "license": "Apache-2.0",
+    "keywords": [
+        "node-red",
+        "nodejs",
+        "inspector",
+        "debug",
+        "v8",
+        "profile",
+        "profiling",
+        "chrome"
+    ],   
+    "bugs": {
+        "url": "https://github.com/bartbutenaers/node-red-contrib-inspector/issues"
+    },
+    "homepage": "https://github.com/bartbutenaers/node-red-contrib-inspector",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bartbutenaers/node-red-contrib-inspector.git"
+    },
+    "node-red": {
+        "nodes": {
+            "node-inspector": "node_inspector.js"
+        }
+    }
+}
