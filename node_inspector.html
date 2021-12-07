@@ -1,0 +1,82 @@
+<!--
+  Copyright 2021, Bart Butenaers
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<script type="text/javascript">      
+    RED.nodes.registerType('node-inspector',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            inputField: {value:"payload", validate: RED.validators.typedInput("inputFieldType")},
+            host: {value:"localhost", required:true},
+            portNumber: {value:9229, required:true},
+            autoStart: {value:false},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:0,
+        icon: "font-awesome/fa-eye",
+        label: function() {
+            return this.name || "inspector";
+        },
+        oneditprepare: function() { 
+            var node = this;
+            
+            // Show the inputField value in a typedinput element (dropdown with only 'msg')
+            $("#node-input-inputFieldType").val(this.inputField);
+            $("#node-input-inputField").typedInput({
+                default: 'msg',
+                typeField: $("#node-input-inputFieldType"),
+                types:['msg']
+            });
+       
+
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="node-inspector">
+    <div class="form-row">
+        <label for="node-input-inputField"><i class="fa fa-terminal"></i> Input cmd</label>
+        <input id="node-input-inputField" type="text" style="width: 70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-host"><i class="fa fa-sitemap"></i> Host</label>
+        <input id="node-input-host" type="text" style="width: 70%">
+    </div>
+    <div class="form-row">
+        <label for="node-input-portNumber"><i class="fa fa-list-ol"></i> Port</label>
+        <input id="node-input-portNumber" type="number" style="width: 70px" min="1024" max="65535" step="1">
+    </div>
+    <div class="form-row">
+        <label for='node-input-autoStart'><i class='fa fa-play-circle'></i> Autostart</label>
+        <input type='checkbox' id='node-input-autoStart' style='width:auto ;border:none; vertical-align:baseline;' placeholder='0'>
+        <span for='node-input-autoStart'> Automatically open the inspector at startup</span>
+    </div>
+    </br>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="node-inspector">
+<p>A Node-RED node to (de)activate the NodeJs inspector at a specified port.</p>
+<p>See my <a target="_blank" href="https://github.com/bartbutenaers/node-red-contrib-inspector-switch/blob/main/README.md">Github readme</a> page for more information and example flows.  Note that those example flows are also available via the Node-RED <a target="_blank" href="notused" onclick="RED.actions.invoke('core:show-import-dialog');return false;">Import dialog</a>.</p>
+<p><strong>Cmd field:</strong><br/>
+Specify in which input message field the commands will be injected. The available commands are <code>open_inspector</code> and <code>close_inspector</code>.</p>
+<p><strong>Host:</strong><br/>
+Specify on which host the NodeJs inspector has to listen for connections. The default port is <code>localhost</code>.  But for example for a Docker container, the host needs to be <code>0.0.0.0</code></p>
+<p><strong>Port:</strong><br/>
+Specify on which port the NodeJs inspector has to listen for connections. The default port is <code>9229</code>.</p>
+<p><strong>Autostart:</strong><br/>
+When activated, the inspector will be activated automatically at flow startup.</p>   
+</script>
