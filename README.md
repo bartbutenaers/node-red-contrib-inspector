@@ -4,7 +4,7 @@ A Node-RED node to (de)activate a NodeJs code inspector session
 ## Install
 Run the following npm command in your Node-RED user directory (typically ~/.node-red):
 ```
-npm install bartbutenaers/node-red-contrib-inspector
+npm install node-red-contrib-inspector
 ```
 
 ## Support my Node-RED developments
