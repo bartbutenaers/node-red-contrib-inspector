@@ -50,11 +50,21 @@
             return inspector.url() != undefined;
         }
         
-        if (config.autoStart) {
-            openInspector();
-        }
+        // The inspector can already be open:
+        // - When NodeJs was started with --inspector startup arguments
+        // - After a redeploy in Node-RED, because in the "close" event the inspector isn't stopped
+        if(isInspectorOpen()) {
+            var statusText = node.host + ":" + node.portNumber;
+            node.status({fill:"blue", shape:"dot", text:statusText});
+        }            
         else {
-            node.status({});
+            // Only autostart the inspector, when it is not started already.
+            if(config.autoStart) {
+                openInspector();
+            }
+            else {
+                node.status({});
+            }
         }
 
         node.on("input", function(msg) {
@@ -93,9 +103,10 @@
         });
         
         node.on("close", function() {
-            if (isInspectorOpen()) {
+            // Don't close the debugger, otherwise you need to reconnect again after every deploy in Node-RED
+            /*if (isInspectorOpen()) {
                 closeInspector();
-            }
+            }*/
         });
     }
 
